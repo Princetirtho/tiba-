@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tiba Education</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+
+      .menu.show {
+        display: flex;
+      }
+    }
+
+
+    .class-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      padding: 30px 0 10px;
+      color: #003366;
+    }
+
+    body.dark .class-title {
+      color: #FFD166;
+    }
+
+    section {
+      background-color: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    body.dark section {
+      background-color: #2e2e2e;
+    }
+
+    .class-card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .class-card {
+      background-color: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #003366;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+
+    .class-card:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+
+    body.dark .class-card {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+    }
+
+    body.dark .class-card:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      font-size: 15px;
+    }
+
+    footer a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .contact-row img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .contact-row p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+           <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../class.html">Class</a>
+      <a href="../contact.html">Contact</a>
+
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+<div class="class-title">📚 Class 11-12 Bangla 2nd</div>
+
+
+
+  <!-- Home -->
+  <section id="home">
+    <h2>🗣️</h2>
+    <p>এই সেকশনে এখনো কিছু যুক্ত করা হয়নি। খুব শীগ্রই নতুন কিছু যুক্ত করা হবে।</p>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>📞 কোনো প্রয়োজনে:</h2>
+
+    <div class="contact-row">
+      <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Email Icon">
+      <p>📧 <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    </div>
+
+    <div class="contact-row">
+      <img src="https://img.icons8.com/fluency/48/phone.png" alt="Phone Icon">
+      <p>📞 মোবাইল: 01304218750</p>
+    </div>
+
+    <div class="contact-row">
+      <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook Icon">
+      <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation" target="_blank">facebook.com/TibaEducation</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+  </script>
+
+</body>
+</html>

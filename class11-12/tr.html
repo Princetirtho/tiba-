@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class 9 | Tiba Education</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+    }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+    }
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    main {
+      flex: 1;
+    }
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+      .menu.show {
+        display: flex;
+      }
+    }
+    .class-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      padding: 30px 0 10px;
+      color: #003366;
+    }
+    body.dark .class-title {
+      color: #FFD166;
+    }
+    #quizSection {
+      padding: 30px;
+      text-align: center;
+    }
+    .question-block {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+  color: #003366;
+}
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    #submitBtn, #resetBtn, #startBtn, #showAnswersBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    #startBtn { background: #007bff; color: white; }
+    #submitBtn { background: #28a745; color: white; }
+    #resetBtn { background: #ffc107; color: black; display: none; }
+    #showAnswersBtn { background: #17a2b8; color: white; margin-left: 10px; display: none; }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #quizContainer {
+      display: none;
+    }
+    #timer {
+      position: sticky;
+      top: 80px;
+      background: #fff;
+      padding: 10px;
+      z-index: 999;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    body.dark #timer {
+      background: #1e1e1e;
+      color: #FFD166;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+      margin-top: 80%;
+    }
+    footer a {
+  color: #FFD700;
+  text-decoration: none;
+}body.dark label { background-color: #2e2e2e; color: white; }
+
+body.dark .question-block { background-color: #2e2e2e; color: white; } </style>
+
+</head>
+<body>
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../class.html">Class</a>
+      <a href="../contact.html">Contact</a>
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+  <div class="class-title">📚 Class 11-12 Higher Math 1st: ত্রিকোণমিতির কুইজ</div>
+  <div id="quizSection">
+    <button id="startBtn" onclick="startQuiz()">🚀 শুরু করুন</button>
+    <div id="quizContainer">
+      <div id="timer">⏳ সময় বাকি: ২৫:০০ <button id="showAnswersBtn" onclick="showCorrectAnswers()">✅ সব সঠিক উত্তর দেখুন</button></div>
+      <form id="quizForm"></form>
+      <button id="submitBtn" onclick="submitQuiz()">✅ জমা দিন</button>
+      <button id="resetBtn" onclick="resetQuiz()">🔁 নতুন করে শুরু</button>
+      <div id="result"></div>
+    </div>
+  </div>
+  <footer>
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+ 
+ 
+ 
+ 
+ const questions = [
+  {
+    question: "১. sin 90° এর মান কত?",
+    options: ["0", "1", "√3", "∞"],
+    answer: 1
+  },
+  {
+    question: "২. cos 0° এর মান কত?",
+    options: ["1", "0", "0.5", "-1"],
+    answer: 0
+  },
+  {
+    question: "৩. tan 45° = ?",
+    options: ["0", "1", "√3", "1/√3"],
+    answer: 1
+  },
+  {
+    question: "৪. sin²θ + cos²θ = ?",
+    options: ["0", "1", "2", "sinθ·cosθ"],
+    answer: 1
+  },
+  {
+    question: "৫. cot θ এর ব্যাসলম্ব রূপ কী?",
+    options: ["cosθ/sinθ", "1/sinθ", "1/cosθ", "tanθ"],
+    answer: 0
+  },
+  {
+    question: "৬. cosec θ = ?",
+    options: ["1/sinθ", "1/cosθ", "1/tanθ", "cosθ/sinθ"],
+    answer: 0
+  },
+  {
+    question: "৭. যদি sin A = 3/5 হয়, তাহলে cos A এর মান কত?",
+    options: ["4/5", "5/4", "3/4", "√2/2"],
+    answer: 0
+  },
+  {
+    question: "৮. cos²θ - sin²θ = ?",
+    options: ["cos 2θ", "sin 2θ", "tan 2θ", "1"],
+    answer: 0
+  },
+  {
+    question: "৯. tan θ = ?",
+    options: ["sinθ/cosθ", "cosθ/sinθ", "1/sinθ", "1/cosθ"],
+    answer: 0
+  },
+  {
+    question: "১০. sec²θ − tan²θ = ?",
+    options: ["1", "0", "secθ", "tanθ"],
+    answer: 0
+  },
+  {
+    question: "১১. cos 60° = ?",
+    options: ["1/2", "√3/2", "0", "1"],
+    answer: 0
+  },
+  {
+    question: "১২. sin 30° = ?",
+    options: ["1/2", "√3/2", "1", "0"],
+    answer: 0
+  },
+  {
+    question: "১৩. একটি সমকোণী ত্রিভুজে অতিভুজ = 13, ভূমি = 5 হলে লম্ব কত?",
+    options: ["12", "10", "8", "6"],
+    answer: 0
+  },
+  {
+    question: "১৪. কোন কোণের ত্রিকোণমিতিক মান সর্বাধিক হয়?",
+    options: ["cosec 0°", "tan 90°", "sec 90°", "sin 90°"],
+    answer: 1
+  },
+  {
+    question: "১৫. cot 45° = ?",
+    options: ["1", "0", "√3", "1/√3"],
+    answer: 0
+  },
+  {
+    question: "১৬. sin²θ = 1 − cos²θ এই সূত্রটি কোন পরিচিত সূত্রের রূপ?",
+    options: ["Pythagorean Identity", "Addition formula", "Subtraction formula", "Half angle formula"],
+    answer: 0
+  },
+  {
+    question: "১৭. cos(−θ) = ?",
+    options: ["cosθ", "−cosθ", "sinθ", "−sinθ"],
+    answer: 0
+  },
+  {
+    question: "১৮. tan(−θ) = ?",
+    options: ["−tanθ", "tanθ", "−cosθ", "cosθ"],
+    answer: 0
+  },
+  {
+    question: "১৯. কোন কোণের জন্য sin θ = cos θ হয়?",
+    options: ["θ = 45°", "θ = 30°", "θ = 60°", "θ = 90°"],
+    answer: 0
+  },
+  {
+    question: "২০. যদি tan θ = √3 হয়, তাহলে θ এর মান কত?",
+    options: ["60°", "30°", "45°", "90°"],
+    answer: 0
+  },
+  {
+    question: "২১. sin 0° = ?",
+    options: ["0", "1", "∞", "0.5"],
+    answer: 0
+  },
+  {
+    question: "২২. sec θ = ?",
+    options: ["1/cosθ", "1/sinθ", "cosθ/sinθ", "sinθ/cosθ"],
+    answer: 0
+  },
+  {
+    question: "২৩. কোনটি একটি পরিচিত ত্রিকোণমিতিক সূত্র?",
+    options: ["sin²θ + cos²θ = 1", "sinθ + cosθ = 1", "tanθ = cosθ/sinθ", "secθ = sinθ"],
+    answer: 0
+  },
+  {
+    question: "২৪. cot²θ + 1 = ?",
+    options: ["cosec²θ", "sec²θ", "tan²θ", "1"],
+    answer: 0
+  },
+  {
+    question: "২৫. tan²θ + 1 = ?",
+    options: ["sec²θ", "cosec²θ", "cot²θ", "1"],
+    answer: 0
+  },
+  {
+    question: "২৬. sin²A + cos²A এর মান সবসময়?",
+    options: ["1", "A", "0", "পরিবর্তনশীল"],
+    answer: 0
+  },
+  {
+    question: "২৭. একটি ত্রিভুজে sin A = √3/2 হলে A এর মান কত?",
+    options: ["60°", "30°", "45°", "90°"],
+    answer: 0
+  },
+  {
+    question: "২৮. কোন ত্রিকোণমিতিক অনুপাতটি অপরিবর্তিত থাকে?",
+    options: ["sin²θ + cos²θ", "sinθ/cosθ", "tanθ − cotθ", "secθ − cosecθ"],
+    answer: 0
+  },
+  {
+    question: "২৯. cos²θ + sin²θ = ?",
+    options: ["1", "0", "2", "−1"],
+    answer: 0
+  },
+  {
+    question: "৩০. cos(90° − θ) = ?",
+    options: ["sinθ", "cosθ", "tanθ", "1 − sinθ"],
+    answer: 0
+  }
+];
+ 
+ 
+ 
+    let timerInterval;
+    let timeLeft = 25 * 60;
+    let submitted = false;
+    function startQuiz() {
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("quizContainer").style.display = "block";
+      submitted = false;
+      renderQuestions();
+      startTimer();
+    }
+    function renderQuestions() {
+  const form = document.getElementById("quizForm");
+  form.innerHTML = '';
+  
+  questions.forEach((q, index) => {
+    const qDiv = document.createElement("div");
+    qDiv.classList.add("question-block");
+    
+    const questionTitle = document.createElement("p");
+    questionTitle.textContent = `${index + 1}. ${q.question}`;
+    qDiv.appendChild(questionTitle);
+    
+    q.options.forEach((opt, i) => {
+      const label = document.createElement("label");
+      
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `q${index}`;
+      radio.value = i;
+      
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(opt));
+      qDiv.appendChild(label);
+    });
+    
+    form.appendChild(qDiv);
+  });
+}
+    function startTimer() {
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").firstChild.textContent =
+        `⏳ সময় বাকি: ${minutes} মিনিট ${seconds < 10 ? '0' : ''}${seconds} সেকেন্ড`;
+    }
+    function submitQuiz() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+      const form = document.getElementById("quizForm");
+      const resultDiv = document.getElementById("result");
+      let correct = 0, wrong = 0;
+      questions.forEach((q, i) => {
+        const options = form.querySelectorAll(`input[name="q${i}"]`);
+        options.forEach((opt) => {
+          opt.disabled = true;
+          const label = opt.parentElement;
+          if (parseInt(opt.value) === q.answer) {
+            if (opt.checked) {
+              label.style.backgroundColor = "#d4edda";
+              correct++;
+            }
+          } else {
+            if (opt.checked) {
+              label.style.backgroundColor = "#f8d7da";
+              wrong++;
+            }
+          }
+        });
+      });
+      resultDiv.innerHTML = `✅ সঠিক উত্তর: ${correct} টি<br>❌ ভুল উত্তর: ${wrong} টি<br>📊 স্কোর: ${correct}/${questions.length}`;
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("resetBtn").style.display = "inline-block";
+      document.getElementById("showAnswersBtn").style.display = "inline-block";
+    }
+    function showCorrectAnswers() {
+      if(submitted){
+        const form = document.getElementById("quizForm");
+        questions.forEach((q, i) => {
+          const options = form.querySelectorAll(`input[name="q${i}"]`);
+          options.forEach((opt) => {
+            const label = opt.parentElement;
+            if (parseInt(opt.value) === q.answer) {
+              label.style.backgroundColor = "#c3e6cb";
+            }
+          });
+        });
+      }
+    }
+    function resetQuiz() {
+      submitted = false;
+      timeLeft = 25 * 60;
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("resetBtn").style.display = "none";
+      document.getElementById("result").innerHTML = '';
+      document.getElementById("showAnswersBtn").style.display = "none";
+      shuffleArray(questions);
+      renderQuestions();
+      const labels = document.querySelectorAll("#quizForm label");
+      labels.forEach(label => label.style.backgroundColor = "");
+      startTimer();
+    }
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+  </script>
+</body>
+</html>

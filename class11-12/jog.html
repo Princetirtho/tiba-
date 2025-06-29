@@ -1,0 +1,677 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class 9 | Tiba Education</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+    }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+    }
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    main {
+      flex: 1;
+    }
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+      .menu.show {
+        display: flex;
+      }
+    }
+    .class-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      padding: 30px 0 10px;
+      color: #003366;
+    }
+    body.dark .class-title {
+      color: #FFD166;
+    }
+    #quizSection {
+      padding: 30px;
+      text-align: center;
+    }
+    .question-block {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+  color: #003366;
+}
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    #submitBtn, #resetBtn, #startBtn, #showAnswersBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    #startBtn { background: #007bff; color: white; }
+    #submitBtn { background: #28a745; color: white; }
+    #resetBtn { background: #ffc107; color: black; display: none; }
+    #showAnswersBtn { background: #17a2b8; color: white; margin-left: 10px; display: none; }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #quizContainer {
+      display: none;
+    }
+    #timer {
+      position: sticky;
+      top: 80px;
+      background: #fff;
+      padding: 10px;
+      z-index: 999;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    body.dark #timer {
+      background: #1e1e1e;
+      color: #FFD166;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+      margin-top: 80%;
+    }
+    footer a {
+  color: #FFD700;
+  text-decoration: none;
+}body.dark label { background-color: #2e2e2e; color: white; }
+
+body.dark .question-block { background-color: #2e2e2e; color: white; } </style>
+
+</head>
+<body>
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../class.html">Class</a>
+      <a href="../contact.html">Contact</a>
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+  <div class="class-title">📚 Class 11-12 Higher Math 1st: যোগযীকরনের কুইজ</div>
+  <div id="quizSection">
+    <button id="startBtn" onclick="startQuiz()">🚀 শুরু করুন</button>
+    <div id="quizContainer">
+      <div id="timer">⏳ সময় বাকি: ২৫:০০ <button id="showAnswersBtn" onclick="showCorrectAnswers()">✅ সব সঠিক উত্তর দেখুন</button></div>
+      <form id="quizForm"></form>
+      <button id="submitBtn" onclick="submitQuiz()">✅ জমা দিন</button>
+      <button id="resetBtn" onclick="resetQuiz()">🔁 নতুন করে শুরু</button>
+      <div id="result"></div>
+    </div>
+  </div>
+  <footer>
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+ 
+ 
+ const questions = [
+  {
+    question: "১. ∫ x² dx এর মান কী?",
+    options: [
+      "x³/3 + C",
+      "2x + C",
+      "x² + C",
+      "3x + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২. ∫ sin(x) dx সমীকরণের ফলাফল কী?",
+    options: [
+      "-cos(x) + C",
+      "cos(x) + C",
+      "sin(x) + C",
+      "-sin(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "৩. ∫ eˣ dx এর ফলাফল কী?",
+    options: [
+      "eˣ + C",
+      "xeˣ + C",
+      "ln|x| + C",
+      "1/eˣ + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "৪. ∫ 1/x dx এর সমাধান কী?",
+    options: [
+      "ln|x| + C",
+      "1/x + C",
+      "x + C",
+      "eˣ + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "৫. ∫ cos(x) dx এর মান কত?",
+    options: [
+      "sin(x) + C",
+      "-sin(x) + C",
+      "cos(x) + C",
+      "-cos(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "৬. ∫ 0 dx কত হবে?",
+    options: [
+      "C (ধ্রুবক)",
+      "0",
+      "x + C",
+      "1"
+    ],
+    answer: 0
+  },
+  {
+    question: "৭. ∫ (3x² + 2x + 1) dx এর ফলাফল কী?",
+    options: [
+      "x³ + x² + x + C",
+      "3x³ + 2x² + x + C",
+      "x² + 2x + 3 + C",
+      "x³ + 2x + 1 + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "৮. ∫ e^(2x) dx এর মান কত?",
+    options: [
+      "e^(2x)/2 + C",
+      "2e^(2x) + C",
+      "e^(2x) + C",
+      "ln|2x| + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "৯. ∫ sec²(x) dx সমান কী?",
+    options: [
+      "tan(x) + C",
+      "cot(x) + C",
+      "sec(x) + C",
+      "-tan(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১০. ∫ csc²(x) dx এর ফলাফল কী?",
+    options: [
+      "-cot(x) + C",
+      "cot(x) + C",
+      "csc(x) + C",
+      "-csc(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১১. ∫ (2x + 1) dx এর মান কত?",
+    options: [
+      "x² + x + C",
+      "2x² + x + C",
+      "x² + 2x + C",
+      "2x + 1 + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১২. ∫ 1/(1 + x²) dx এর ফলাফল কী?",
+    options: [
+      "tan⁻¹(x) + C",
+      "ln|x| + C",
+      "sec⁻¹(x) + C",
+      "cot⁻¹(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১৩. ∫ sinh(x) dx এর মান কী?",
+    options: [
+      "cosh(x) + C",
+      "sinh(x) + C",
+      "-cosh(x) + C",
+      "-sinh(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১৪. ∫ cosh(x) dx এর ফলাফল কত?",
+    options: [
+      "sinh(x) + C",
+      "cosh(x) + C",
+      "-sinh(x) + C",
+      "-cosh(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১৫. ∫ (1 / √(1 - x²)) dx এর মান কী?",
+    options: [
+      "sin⁻¹(x) + C",
+      "cos⁻¹(x) + C",
+      "tan⁻¹(x) + C",
+      "sec⁻¹(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১৬. ∫ (2x)·e^(x²) dx সমান?",
+    options: [
+      "e^(x²) + C",
+      "2e^(x²) + C",
+      "xe^(x²) + C",
+      "e^(2x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১৭. ∫ ln(x) dx এর মান কী?",
+    options: [
+      "x ln(x) − x + C",
+      "ln(x) + C",
+      "x ln(x) + C",
+      "1/x + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১৮. ∫ (1 / x²) dx এর ফলাফল কী?",
+    options: [
+      "-1/x + C",
+      "1/x + C",
+      "-x + C",
+      "x + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "১৯. ∫ tan(x) dx এর মান কত?",
+    options: [
+      "-ln|cos(x)| + C",
+      "ln|sin(x)| + C",
+      "ln|tan(x)| + C",
+      "-tan(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২০. ∫ cot(x) dx এর মান কত?",
+    options: [
+      "ln|sin(x)| + C",
+      "-ln|sin(x)| + C",
+      "ln|cos(x)| + C",
+      "-ln|cos(x)| + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২১. ∫ sec(x) tan(x) dx সমান কী?",
+    options: [
+      "sec(x) + C",
+      "tan(x) + C",
+      "sec²(x) + C",
+      "cot(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২২. ∫ csc(x) cot(x) dx এর ফলাফল কত?",
+    options: [
+      "-csc(x) + C",
+      "csc(x) + C",
+      "cot(x) + C",
+      "-cot(x) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২৩. ∫ (3x² − 2x + 1) dx কত?",
+    options: [
+      "x³ − x² + x + C",
+      "3x³ − 2x² + x + C",
+      "x² − 2x + 1 + C",
+      "x³ − 2x + 1 + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২৪. ∫ 5 dx এর মান কত?",
+    options: [
+      "5x + C",
+      "x + C",
+      "25x + C",
+      "5 + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২৫. ∫ (x + 1)² dx এর মান কী?",
+    options: [
+      "(x + 1)³ / 3 + C",
+      "(x + 1)² + C",
+      "(x + 1)³ + C",
+      "(x + 1) / 3 + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২৬. ∫ (1 / (x + 2)) dx এর মান কত?",
+    options: [
+      "ln|x + 2| + C",
+      "1 / (x + 2) + C",
+      "x + 2 + C",
+      "e^(x+2) + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২৭. ∫ (cos 2x) dx কত?",
+    options: [
+      "(sin 2x)/2 + C",
+      "−(sin 2x)/2 + C",
+      "cos 2x + C",
+      "sin 2x + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২৮. ∫ (sin 3x) dx এর মান কী?",
+    options: [
+      "−(cos 3x)/3 + C",
+      "(cos 3x)/3 + C",
+      "sin 3x + C",
+      "−sin 3x + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "২৯. ∫ (x eˣ) dx এর ফলাফল কী?",
+    options: [
+      "(x − 1)eˣ + C",
+      "xeˣ + C",
+      "eˣ + C",
+      "(x + 1)eˣ + C"
+    ],
+    answer: 0
+  },
+  {
+    question: "৩০. ∫ (1 / (1 − x)) dx এর মান কী?",
+    options: [
+      "−ln|1 − x| + C",
+      "ln|1 − x| + C",
+      "1 / (1 − x) + C",
+      "−1 / (1 − x) + C"
+    ],
+    answer: 0
+  }
+];
+ 
+ 
+ 
+ 
+ 
+    let timerInterval;
+    let timeLeft = 25 * 60;
+    let submitted = false;
+    function startQuiz() {
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("quizContainer").style.display = "block";
+      submitted = false;
+      renderQuestions();
+      startTimer();
+    }
+    function renderQuestions() {
+  const form = document.getElementById("quizForm");
+  form.innerHTML = '';
+  
+  questions.forEach((q, index) => {
+    const qDiv = document.createElement("div");
+    qDiv.classList.add("question-block");
+    
+    const questionTitle = document.createElement("p");
+    questionTitle.textContent = `${index + 1}. ${q.question}`;
+    qDiv.appendChild(questionTitle);
+    
+    q.options.forEach((opt, i) => {
+      const label = document.createElement("label");
+      
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `q${index}`;
+      radio.value = i;
+      
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(opt));
+      qDiv.appendChild(label);
+    });
+    
+    form.appendChild(qDiv);
+  });
+}
+    function startTimer() {
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").firstChild.textContent =
+        `⏳ সময় বাকি: ${minutes} মিনিট ${seconds < 10 ? '0' : ''}${seconds} সেকেন্ড`;
+    }
+    function submitQuiz() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+      const form = document.getElementById("quizForm");
+      const resultDiv = document.getElementById("result");
+      let correct = 0, wrong = 0;
+      questions.forEach((q, i) => {
+        const options = form.querySelectorAll(`input[name="q${i}"]`);
+        options.forEach((opt) => {
+          opt.disabled = true;
+          const label = opt.parentElement;
+          if (parseInt(opt.value) === q.answer) {
+            if (opt.checked) {
+              label.style.backgroundColor = "#d4edda";
+              correct++;
+            }
+          } else {
+            if (opt.checked) {
+              label.style.backgroundColor = "#f8d7da";
+              wrong++;
+            }
+          }
+        });
+      });
+      resultDiv.innerHTML = `✅ সঠিক উত্তর: ${correct} টি<br>❌ ভুল উত্তর: ${wrong} টি<br>📊 স্কোর: ${correct}/${questions.length}`;
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("resetBtn").style.display = "inline-block";
+      document.getElementById("showAnswersBtn").style.display = "inline-block";
+    }
+    function showCorrectAnswers() {
+      if(submitted){
+        const form = document.getElementById("quizForm");
+        questions.forEach((q, i) => {
+          const options = form.querySelectorAll(`input[name="q${i}"]`);
+          options.forEach((opt) => {
+            const label = opt.parentElement;
+            if (parseInt(opt.value) === q.answer) {
+              label.style.backgroundColor = "#c3e6cb";
+            }
+          });
+        });
+      }
+    }
+    function resetQuiz() {
+      submitted = false;
+      timeLeft = 25 * 60;
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("resetBtn").style.display = "none";
+      document.getElementById("result").innerHTML = '';
+      document.getElementById("showAnswersBtn").style.display = "none";
+      shuffleArray(questions);
+      renderQuestions();
+      const labels = document.querySelectorAll("#quizForm label");
+      labels.forEach(label => label.style.backgroundColor = "");
+      startTimer();
+    }
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+  </script>
+</body>
+</html>

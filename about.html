@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tiba Education</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+
+      .menu.show {
+        display: flex;
+      }
+    }
+
+    section {
+      background-color: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    body.dark section {
+      background-color: #2e2e2e;
+    }
+    
+    
+    
+    
+        .class-card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .class-card {
+      background-color: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #003366;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+
+    .class-card:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+
+    body.dark .class-card {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+    }
+
+    body.dark .class-card:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+
+
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      font-size: 15px;
+    }
+
+    footer a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+    
+    
+    
+    
+    
+    
+    .profile-img {
+  display: block;
+  width:250px;
+  height:300px ;
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border:none;
+  transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.05);
+}
+
+body.dark .profile-img {
+  border-color: #FFD166;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="class.html">Class</a>
+      <a href="contact.html">Contact</a>
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+  
+  <h2 style="text-align: center;">About us</h2>
+
+  <!-- Home -->
+  <section id="home">
+    <img src="tirtho.jpg" alt="Tirtho Chakroborty" class="profile-img">
+  <h2> আমার সম্পর্কে</h2>
+    <p style="max-width: 700px; margin: auto; font-size: 17px;">
+      আমি <strong>তীর্থ চক্রবর্ত্তী</strong>। আমি Tiba Education-এর প্রতিষ্ঠাতা এবং একজন শিক্ষার্থী-বন্ধু। আমার লক্ষ্য হলো — বাংলাদেশের প্রত্যন্ত অঞ্চলের শিক্ষার্থীরাও যেন অনলাইনে সহজেই অধ্যায়ভিত্তিক শিক্ষাসমগ্রী পায়।
+      আমাদের প্ল্যাটফর্মে রয়েছে ক্লাস ৬ থেকে ১০ পর্যন্ত সকল বিষয়ের বিস্তারিত নোট, কুইজ এবং প্রশ্নোত্তর ব্যবস্থা একদম ফ্রি!
+    </p>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+<p>
+      Tiba Education একটি সম্পূর্ণ ফ্রি ও ডিজিটাল শিক্ষার প্ল্যাটফর্ম, যেখানে ক্লাস ৬ থেকে ১০ পর্যন্ত প্রতিটি বিষয়ের চ্যাপ্টারভিত্তিক সাজানো নোট, কুইজ, মডেল টেস্ট এবং এক্সাম প্রস্তুতির গাইড দেওয়া হয়।
+    </p>
+    <p>
+      শিক্ষার্থীরা ঘরে বসেই সঠিক ও নির্ভরযোগ্য রিসোর্স পেয়ে যাবে – যা স্কুল ও বোর্ড পরীক্ষার জন্য আদর্শ। এই ওয়েবসাইটটি তৈরি করা হয়েছে শিক্ষার্থীদের সময় ও মনোযোগকে গুরুত্ব দিয়ে।
+    </p>
+   
+  </section>
+
+  <!-- Classes -->
+
+  <!-- Footer -->
+  <footer id="contact">
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+  </script>
+
+</body>
+</html>

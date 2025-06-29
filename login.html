@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Tiba Education</title>
+</head>
+<body>
+
+  <h2>🔐 Gmail দিয়ে লগইন করুন</h2>
+  <button id="loginBtn">Sign in with Google</button>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+  <p id="userInfo"></p>
+
+  <script type="module">
+    // Firebase SDK import
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDxI_Y02wkbdtDGFVXVbPDkTwLZWMP76nk",
+      authDomain: "tiba-education.firebaseapp.com",
+      projectId: "tiba-education",
+      storageBucket: "tiba-education.firebasestorage.app",
+      messagingSenderId: "485578092666",
+      appId: "1:485578092666:web:1eab3ee5abbe2ab1448bc3"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const loginBtn = document.getElementById("loginBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const userInfo = document.getElementById("userInfo");
+
+    loginBtn.onclick = () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          userInfo.textContent = `👋 স্বাগতম, ${user.displayName}`;
+          loginBtn.style.display = "none";
+          logoutBtn.style.display = "inline-block";
+        })
+        .catch((error) => {
+          console.error("Login Failed:", error);
+          alert("লগইন ব্যর্থ হয়েছে!");
+        });
+    };
+
+    logoutBtn.onclick = () => {
+      signOut(auth).then(() => {
+        userInfo.textContent = "";
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+      });
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        userInfo.textContent = `👋 স্বাগতম, ${user.displayName}`;
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline-block";
+      } else {
+        userInfo.textContent = "";
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

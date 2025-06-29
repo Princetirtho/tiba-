@@ -1,0 +1,533 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class 9 | Tiba Education</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+    }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+    }
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    main {
+      flex: 1;
+    }
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+      .menu.show {
+        display: flex;
+      }
+    }
+    .class-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      padding: 30px 0 10px;
+      color: #003366;
+    }
+    body.dark .class-title {
+      color: #FFD166;
+    }
+    #quizSection {
+      padding: 30px;
+      text-align: center;
+    }
+    .question-block {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+  color: #003366;
+}
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    #submitBtn, #resetBtn, #startBtn, #showAnswersBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    #startBtn { background: #007bff; color: white; }
+    #submitBtn { background: #28a745; color: white; }
+    #resetBtn { background: #ffc107; color: black; display: none; }
+    #showAnswersBtn { background: #17a2b8; color: white; margin-left: 10px; display: none; }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #quizContainer {
+      display: none;
+    }
+    #timer {
+      position: sticky;
+      top: 80px;
+      background: #fff;
+      padding: 10px;
+      z-index: 999;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    body.dark #timer {
+      background: #1e1e1e;
+      color: #FFD166;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+      margin-top: 80%;
+    }
+    footer a {
+  color: #FFD700;
+  text-decoration: none;
+}body.dark label { background-color: #2e2e2e; color: white; }
+
+body.dark .question-block { background-color: #2e2e2e; color: white; } </style>
+
+</head>
+<body>
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../class.html">Class</a>
+      <a href="../contact.html">Contact</a>
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+  <div class="class-title">📚 Class 11-12 Higher Math 1st: ম্যাট্রিক্স ও নির্ণায়ক কুইজ</div>
+  <div id="quizSection">
+    <button id="startBtn" onclick="startQuiz()">🚀 শুরু করুন</button>
+    <div id="quizContainer">
+      <div id="timer">⏳ সময় বাকি: ২৫:০০ <button id="showAnswersBtn" onclick="showCorrectAnswers()">✅ সব সঠিক উত্তর দেখুন</button></div>
+      <form id="quizForm"></form>
+      <button id="submitBtn" onclick="submitQuiz()">✅ জমা দিন</button>
+      <button id="resetBtn" onclick="resetQuiz()">🔁 নতুন করে শুরু</button>
+      <div id="result"></div>
+    </div>
+  </div>
+  <footer>
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+  const questions = [
+  {
+    question: "১. নিচের কোনটি ম্যাট্রিক্সের সঠিক সংজ্ঞা?",
+    options: ["একটি সংখ্যার সংগ্রহ", "একটি বর্গাকার সংখ্যা", "সংখ্যাগুলোর আয়তাকার সজ্জা", "সংখ্যার গুণফল"],
+    answer: 2
+  },
+  {
+    question: "২. ম্যাট্রিক্স A = [2 3; 4 5] এর ক্রম কত?",
+    options: ["2x2", "1x2", "2x1", "3x3"],
+    answer: 0
+  },
+  {
+    question: "৩. ম্যাট্রিক্স A = [1 2; 3 4] এর নির্ণায়ক কত?",
+    options: ["10", "-2", "0", "2"],
+    answer: 1
+  },
+  {
+    question: "৪. কোন ম্যাট্রিক্সের নির্ণায়ক ০ হলে তাকে কী বলে?",
+    options: ["ব্যতিক্রমী", "অব্যতিক্রমী", "শূন্য ম্যাট্রিক্স", "পরিসম ম্যাট্রিক্স"],
+    answer: 0
+  },
+  {
+    question: "৫. ম্যাট্রিক্স A এর আদিপাঠ নির্ণয়ের নিয়ম কী?",
+    options: ["সারি ও কলাম পরিবর্তন", "ত্রিভুজাকৃতি করা", "গুণফল বের করা", "গড় নির্ণয়"],
+    answer: 0
+  },
+  {
+    question: "৬. ম্যাট্রিক্স A এর উল্টোম্যাট্রিক্স A⁻¹ কবে বিদ্যমান?",
+    options: ["নির্ণায়ক ≠ ০", "নির্ণায়ক = ০", "A একটি শূন্য ম্যাট্রিক্স", "A একটি ত্রিভুজ ম্যাট্রিক্স"],
+    answer: 0
+  },
+  {
+    question: "৭. A = [a b; c d] হলে det(A) = ?",
+    options: ["ab + cd", "ad - bc", "ac + bd", "a - d"],
+    answer: 1
+  },
+  {
+    question: "৮. ম্যাট্রিক্স গুণের জন্য শর্ত কী?",
+    options: ["প্রথম ম্যাট্রিক্সের কলাম সংখ্যা = দ্বিতীয় ম্যাট্রিক্সের সারি সংখ্যা", "উভয় ম্যাট্রিক্স সমান", "বর্গাকার", "উভয় ত্রিভুজ"],
+    answer: 0
+  },
+  {
+    question: "৯. ম্যাট্রিক্স A এর প্রতিসম ম্যাট্রিক্স কী?",
+    options: ["A = A'", "A = -A'", "A ≠ A'", "A⁻¹ = A"],
+    answer: 0
+  },
+  {
+    question: "১০. [0 0; 0 0] ম্যাট্রিক্সের নির্ণায়ক কত?",
+    options: ["০", "১", "যেকোনো সংখ্যা", "অসম্ভব"],
+    answer: 0
+  },
+  {
+    question: "১১. ম্যাট্রিক্স B = [2 1; 1 2] হলে det(B) = ?",
+    options: ["3", "4", "2", "5"],
+    answer: 3
+  },
+  {
+    question: "১২. যদি A একটি 3x3 ম্যাট্রিক্স হয়, তবে det(A) কিভাবে নির্ণয় করা যায়?",
+    options: ["Sarrus's Rule", "Cramer's Rule", "Gaussian Elimination", "Matrix Addition"],
+    answer: 0
+  },
+  {
+    question: "১৩. কোন ম্যাট্রিক্সের নির্ণায়ক সবসময় ধনাত্মক হয় না?",
+    options: ["ত্রিভুজ ম্যাট্রিক্স", "পরিসম ম্যাট্রিক্স", "একক ম্যাট্রিক্স", "কোনোটিই নয়"],
+    answer: 1
+  },
+  {
+    question: "১৪. একক ম্যাট্রিক্সের নির্ণায়ক কত?",
+    options: ["১", "০", "-১", "অসম্ভব"],
+    answer: 0
+  },
+  {
+    question: "১৫. ম্যাট্রিক্স A ও B যদি উল্টোম্যাট্রিক্স হয়, তাহলে AB = ?",
+    options: ["A", "B", "I", "০"],
+    answer: 2
+  },
+  {
+    question: "১৬. ম্যাট্রিক্সের মূল উপাত্তসমূহ কোথায় থাকে?",
+    options: ["কেন্দ্রে", "অন্তরDiagonal-এ", "বাইরের সীমানায়", "প্রথম কলামে"],
+    answer: 1
+  },
+  {
+    question: "১৭. যদি A = [1 2; 3 4], তাহলে A এর ট্রেস কত?",
+    options: ["৫", "৬", "৪", "৩"],
+    answer: 0
+  },
+  {
+    question: "১৮. কোন ম্যাট্রিক্সের ট্রান্সপোজ নিজেই হয়?",
+    options: ["প্রতিসম ম্যাট্রিক্স", "উল্টোম্যাট্রিক্স", "একক ম্যাট্রিক্স", "ত্রিভুজ ম্যাট্রিক্স"],
+    answer: 0
+  },
+  {
+    question: "১৯. ম্যাট্রিক্স গুণের ফলাফল কি সবসময় অভিন্ন হয়?",
+    options: ["না", "হ্যাঁ", "মাঝেমধ্যে", "সবসময় সমান"],
+    answer: 0
+  },
+  {
+    question: "২০. ম্যাট্রিক্সের টার্মিনাল উপাদান কোথায় থাকে?",
+    options: ["সর্বশেষ সারি ও কলামে", "প্রথম সারিতে", "মধ্যবিন্দুতে", "উপরের ডায়াগনালে"],
+    answer: 0
+  },
+  {
+    question: "২১. ম্যাট্রিক্সের নির্ণায়ক কোন কাজে ব্যবহৃত হয়?",
+    options: ["Linear Equations সমাধানে", "পাঠ্য গণনায়", "হিসাব নিরীক্ষায়", "মানচিত্র তৈরিতে"],
+    answer: 0
+  },
+  {
+    question: "২২. নিচের কোনটি স্কেলার ম্যাট্রিক্স?",
+    options: ["[5 0; 0 5]", "[1 2; 3 4]", "[0 1; 1 0]", "[2 2; 2 2]"],
+    answer: 0
+  },
+  {
+    question: "২৩. ম্যাট্রিক্সের ট্রান্সপোজ করার অর্থ কী?",
+    options: ["সারি ও কলাম অদলবদল", "গুণফল বের করা", "সংযোজন", "নির্ণায়ক বের করা"],
+    answer: 0
+  },
+  {
+    question: "২৪. কোন ম্যাট্রিক্সের নির্ণায়ক 'ad - bc' দ্বারা নির্ধারণ করা হয়?",
+    options: ["২x২", "৩x৩", "১x১", "৪x৪"],
+    answer: 0
+  },
+  {
+    question: "২৫. ম্যাট্রিক্স A = [3 2; 1 4], det(A) = ?",
+    options: ["10", "12", "8", "7"],
+    answer: 0
+  },
+  {
+    question: "২৬. যদি det(A) = 0 হয়, তাহলে A⁻¹ থাকবে কি?",
+    options: ["না", "হ্যাঁ", "মাঝেমধ্যে", "সবসময়"],
+    answer: 0
+  },
+  {
+    question: "২৭. কোন ম্যাট্রিক্সের নির্ণায়ক নির্দিষ্ট নিয়মে কাজ করে না?",
+    options: ["অবৈধ ম্যাট্রিক্স", "পরিসম ম্যাট্রিক্স", "একক ম্যাট্রিক্স", "ত্রিভুজ ম্যাট্রিক্স"],
+    answer: 0
+  },
+  {
+    question: "২৮. কোন ম্যাট্রিক্সের উপাদান কেবলমাত্র ত্রিভুজে থাকে?",
+    options: ["ত্রিভুজ ম্যাট্রিক্স", "প্রতিসম ম্যাট্রিক্স", "স্কেলার", "শূন্য ম্যাট্রিক্স"],
+    answer: 0
+  },
+  {
+    question: "২৯. যদি একটি ম্যাট্রিক্সে উপরের ত্রিভুজ অংশে সব শূন্য, তবে সেটি কী?",
+    options: ["নিম্নত্রিভুজ ম্যাট্রিক্স", "উপর্ত্রিভুজ", "শূন্য ম্যাট্রিক্স", "প্রতিসম"],
+    answer: 0
+  },
+  {
+    question: "৩০. ম্যাট্রিক্স নির্ণায়ক কিসের ফাংশন?",
+    options: ["স্কেলার", "ম্যাট্রিক্স", "ভেক্টর", "টেনসর"],
+    answer: 0
+  }
+];
+    let timerInterval;
+    let timeLeft = 25 * 60;
+    let submitted = false;
+    function startQuiz() {
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("quizContainer").style.display = "block";
+      submitted = false;
+      renderQuestions();
+      startTimer();
+    }
+    function renderQuestions() {
+  const form = document.getElementById("quizForm");
+  form.innerHTML = '';
+  
+  questions.forEach((q, index) => {
+    const qDiv = document.createElement("div");
+    qDiv.classList.add("question-block");
+    
+    const questionTitle = document.createElement("p");
+    questionTitle.textContent = `${index + 1}. ${q.question}`;
+    qDiv.appendChild(questionTitle);
+    
+    q.options.forEach((opt, i) => {
+      const label = document.createElement("label");
+      
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `q${index}`;
+      radio.value = i;
+      
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(opt));
+      qDiv.appendChild(label);
+    });
+    
+    form.appendChild(qDiv);
+  });
+}
+    function startTimer() {
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").firstChild.textContent =
+        `⏳ সময় বাকি: ${minutes} মিনিট ${seconds < 10 ? '0' : ''}${seconds} সেকেন্ড`;
+    }
+    function submitQuiz() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+      const form = document.getElementById("quizForm");
+      const resultDiv = document.getElementById("result");
+      let correct = 0, wrong = 0;
+      questions.forEach((q, i) => {
+        const options = form.querySelectorAll(`input[name="q${i}"]`);
+        options.forEach((opt) => {
+          opt.disabled = true;
+          const label = opt.parentElement;
+          if (parseInt(opt.value) === q.answer) {
+            if (opt.checked) {
+              label.style.backgroundColor = "#d4edda";
+              correct++;
+            }
+          } else {
+            if (opt.checked) {
+              label.style.backgroundColor = "#f8d7da";
+              wrong++;
+            }
+          }
+        });
+      });
+      resultDiv.innerHTML = `✅ সঠিক উত্তর: ${correct} টি<br>❌ ভুল উত্তর: ${wrong} টি<br>📊 স্কোর: ${correct}/${questions.length}`;
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("resetBtn").style.display = "inline-block";
+      document.getElementById("showAnswersBtn").style.display = "inline-block";
+    }
+    function showCorrectAnswers() {
+      if(submitted){
+        const form = document.getElementById("quizForm");
+        questions.forEach((q, i) => {
+          const options = form.querySelectorAll(`input[name="q${i}"]`);
+          options.forEach((opt) => {
+            const label = opt.parentElement;
+            if (parseInt(opt.value) === q.answer) {
+              label.style.backgroundColor = "#c3e6cb";
+            }
+          });
+        });
+      }
+    }
+    function resetQuiz() {
+      submitted = false;
+      timeLeft = 25 * 60;
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("resetBtn").style.display = "none";
+      document.getElementById("result").innerHTML = '';
+      document.getElementById("showAnswersBtn").style.display = "none";
+      shuffleArray(questions);
+      renderQuestions();
+      const labels = document.querySelectorAll("#quizForm label");
+      labels.forEach(label => label.style.backgroundColor = "");
+      startTimer();
+    }
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ 
+  </script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class 9 | Tiba Education</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+    }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+    }
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    main {
+      flex: 1;
+    }
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+      .menu.show {
+        display: flex;
+      }
+    }
+    .class-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      padding: 30px 0 10px;
+      color: #003366;
+    }
+    body.dark .class-title {
+      color: #FFD166;
+    }
+    #quizSection {
+      padding: 30px;
+      text-align: center;
+    }
+    .question-block {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+  color: #003366;
+}
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    #submitBtn, #resetBtn, #startBtn, #showAnswersBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    #startBtn { background: #007bff; color: white; }
+    #submitBtn { background: #28a745; color: white; }
+    #resetBtn { background: #ffc107; color: black; display: none; }
+    #showAnswersBtn { background: #17a2b8; color: white; margin-left: 10px; display: none; }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #quizContainer {
+      display: none;
+    }
+    #timer {
+      position: sticky;
+      top: 80px;
+      background: #fff;
+      padding: 10px;
+      z-index: 999;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    body.dark #timer {
+      background: #1e1e1e;
+      color: #FFD166;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+      margin-top: 80%;
+    }
+    footer a {
+  color: #FFD700;
+  text-decoration: none;
+}body.dark label { background-color: #2e2e2e; color: white; }
+
+body.dark .question-block { background-color: #2e2e2e; color: white; } </style>
+
+</head>
+<body>
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../class.html">Class</a>
+      <a href="../contact.html">Contact</a>
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+  <div class="class-title">📚 Class 11-12 Higher Math 1st: বৃত্ত কুইজ</div>
+  <div id="quizSection">
+    <button id="startBtn" onclick="startQuiz()">🚀 শুরু করুন</button>
+    <div id="quizContainer">
+      <div id="timer">⏳ সময় বাকি: ২৫:০০ <button id="showAnswersBtn" onclick="showCorrectAnswers()">✅ সব সঠিক উত্তর দেখুন</button></div>
+      <form id="quizForm"></form>
+      <button id="submitBtn" onclick="submitQuiz()">✅ জমা দিন</button>
+      <button id="resetBtn" onclick="resetQuiz()">🔁 নতুন করে শুরু</button>
+      <div id="result"></div>
+    </div>
+  </div>
+  <footer>
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+ 
+ 
+ 
+ const questions = [
+  {
+    question: "১. বৃত্তের সাধারণ সমীকরণ কী?",
+    options: ["x² + y² = r²", "x² + y = r", "x + y = r²", "x² - y² = r²"],
+    answer: 0
+  },
+  {
+    question: "২. কেন্দ্র (h, k) এবং ব্যাসার্ধ r হলে বৃত্তের সমীকরণ কী?",
+    options: ["(x-h)² + (y-k)² = r²", "(x+h)² + (y+k)² = r", "(x+h)² - (y+k)² = r²", "x² + y² = r"],
+    answer: 0
+  },
+  {
+    question: "৩. x² + y² = 25 সমীকরণে ব্যাসার্ধ কত?",
+    options: ["৫", "২৫", "১০", "১২.৫"],
+    answer: 0
+  },
+  {
+    question: "৪. x² + y² = r² সমীকরণে বৃত্তের কেন্দ্র কোথায়?",
+    options: ["(r, r)", "(0, 0)", "(1, 1)", "(-r, -r)"],
+    answer: 1
+  },
+  {
+    question: "৫. বৃত্তের পরিসীমা নির্ণয়ের সূত্র কী?",
+    options: ["2πr", "πr²", "πd", "r²π"],
+    answer: 0
+  },
+  {
+    question: "৬. বৃত্তের ক্ষেত্রফল নির্ণয়ের সূত্র কী?",
+    options: ["πr²", "2πr", "πd", "r² + π"],
+    answer: 0
+  },
+  {
+    question: "৭. একটি বৃত্তে কেন্দ্র ও ব্যাসার্ধের সংখ্যা কত?",
+    options: ["১টি কেন্দ্র, অসংখ্য ব্যাসার্ধ", "২টি কেন্দ্র", "১টি ব্যাসার্ধ", "কোনোটিই নয়"],
+    answer: 0
+  },
+  {
+    question: "৮. দুটি বৃত্ত ছেদ করলে কতটি বিন্দুতে ছেদ করতে পারে?",
+    options: ["০, ১, বা ২", "৩টি", "৪টি", "সর্বদা ২টি"],
+    answer: 0
+  },
+  {
+    question: "৯. ব্যাস কতটা হয়?",
+    options: ["2 × ব্যাসার্ধ", "ব্যাসার্ধ ÷ 2", "π × ব্যাসার্ধ", "π × ব্যাস"],
+    answer: 0
+  },
+  {
+    question: "১০. কোন বিন্দুটি বৃত্তের উপর অবস্থিত?",
+    options: ["যে বিন্দুটি বৃত্তের সমীকরণকে সন্তুষ্ট করে", "যেকোনো বিন্দু", "শুধু কেন্দ্র", "কোনোটিই নয়"],
+    answer: 0
+  },
+  {
+    question: "১১. x² + y² + 4x + 6y + 9 = 0 সমীকরণ কোন জ্যামিতিক রূপ?",
+    options: ["বৃত্ত", "সরলরেখা", "প্যারাবোলা", "হাইপারবোলা"],
+    answer: 0
+  },
+  {
+    question: "১২. x² + y² - 6x - 8y + 9 = 0 বৃত্তটির কেন্দ্র কোনটি?",
+    options: ["(3, 4)", "(-3, -4)", "(6, 8)", "(0, 0)"],
+    answer: 0
+  },
+  {
+    question: "১৩. কোনটি বৃত্তের অংশ?",
+    options: ["জ্যা", "চাপ", "ত্রিভুজ", "উভয় ক এবং খ"],
+    answer: 3
+  },
+  {
+    question: "১৪. জ্যা ও ব্যাসের মধ্যে সম্পর্ক কী?",
+    options: ["ব্যাস সবথেকে বড় জ্যা", "জ্যা সবসময় ব্যাস", "তারা সমান", "কোন সম্পর্ক নেই"],
+    answer: 0
+  },
+  {
+    question: "১৫. বৃত্তের ব্যাস যদি 10cm হয়, তবে ব্যাসার্ধ কত?",
+    options: ["5cm", "10cm", "20cm", "2.5cm"],
+    answer: 0
+  },
+  {
+    question: "১৬. দুটি বৃত্ত যদি এককেন্দ্রিক হয়, তাদের কেন্দ্র হবে—",
+    options: ["একই", "বিভিন্ন", "লম্ব", "অনুভূমিক"],
+    answer: 0
+  },
+  {
+    question: "১৭. কোনো রেখা বৃত্তকে ছেদ করলে তাকে কী বলে?",
+    options: ["ছেদক", "স্পর্শক", "জ্যা", "ব্যাস"],
+    answer: 0
+  },
+  {
+    question: "১৮. একটি রেখা বৃত্তকে একটি মাত্র বিন্দুতে স্পর্শ করলে তাকে বলে—",
+    options: ["স্পর্শক", "জ্যা", "ছেদক", "ব্যাস"],
+    answer: 0
+  },
+  {
+    question: "১৯. বৃত্তের স্পর্শক ও ব্যাসার্ধের কোণ কত ডিগ্রি?",
+    options: ["৯০°", "১৮০°", "০°", "৪৫°"],
+    answer: 0
+  },
+  {
+    question: "২০. বৃত্তের যে অংশ কেন্দ্র ও দুটি বিন্দু দ্বারা ঘেরা সেটি কী?",
+    options: ["খন্ড", "চাপ", "জ্যা", "ত্রিভুজ"],
+    answer: 0
+  },
+  {
+    question: "২১. বৃত্তের অংশবিশেষকে কী বলে?",
+    options: ["খন্ড", "বিন্দু", "ত্রিভুজ", "আয়ত"],
+    answer: 0
+  },
+  {
+    question: "২২. কোনটি বৃত্তের জন্য প্রযোজ্য নয়?",
+    options: ["কেন্দ্র", "ব্যাসার্ধ", "অক্ষ", "চাপ"],
+    answer: 2
+  },
+  {
+    question: "২৩. x² + y² = 16 সমীকরণে ব্যাসার্ধ কত?",
+    options: ["৪", "১৬", "৮", "২"],
+    answer: 0
+  },
+  {
+    question: "২৪. স্পর্শক কী রাশি নির্দেশ করে?",
+    options: ["রেখা", "ত্রিভুজ", "চাপ", "জ্যা"],
+    answer: 0
+  },
+  {
+    question: "২৫. বৃত্তে কেন্দ্রে উৎপন্ন কোণকে বলে—",
+    options: ["কেন্দ্রীয় কোণ", "বাহ্য কোণ", "ত্রিভুজীয় কোণ", "স্পর্শক কোণ"],
+    answer: 0
+  },
+  {
+    question: "২৬. স্পর্শক ও ব্যাসার্ধ সর্বদা—",
+    options: ["লম্ব", "সমান্তরাল", "বিপরীত", "অনুপ্রস্থ"],
+    answer: 0
+  },
+  {
+    question: "২৭. দুইটি বৃত্ত একে অপরকে স্পর্শ করলে তাকে বলে—",
+    options: ["স্পর্শী বৃত্ত", "অভ্যন্তরীণ বৃত্ত", "লম্ব বৃত্ত", "খন্ডিত বৃত্ত"],
+    answer: 0
+  },
+  {
+    question: "২৮. x² + y² - 4x + 6y + 12 = 0 এর কেন্দ্র কী?",
+    options: ["(2, -3)", "(-2, 3)", "(4, 6)", "(-4, 6)"],
+    answer: 0
+  },
+  {
+    question: "২৯. বৃত্তে যে রেখাটি কেন্দ্র অতিক্রম করে তাকে কী বলে?",
+    options: ["ব্যাস", "জ্যা", "চাপ", "স্পর্শক"],
+    answer: 0
+  },
+  {
+    question: "৩০. বৃত্তের ক্ষেত্রফল যদি ৪৯π হয়, তবে ব্যাসার্ধ কত?",
+    options: ["৭", "১৪", "৪৯", "৫"],
+    answer: 0
+  }
+];
+ 
+ 
+ 
+ 
+    let timerInterval;
+    let timeLeft = 25 * 60;
+    let submitted = false;
+    function startQuiz() {
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("quizContainer").style.display = "block";
+      submitted = false;
+      renderQuestions();
+      startTimer();
+    }
+    function renderQuestions() {
+  const form = document.getElementById("quizForm");
+  form.innerHTML = '';
+  
+  questions.forEach((q, index) => {
+    const qDiv = document.createElement("div");
+    qDiv.classList.add("question-block");
+    
+    const questionTitle = document.createElement("p");
+    questionTitle.textContent = `${index + 1}. ${q.question}`;
+    qDiv.appendChild(questionTitle);
+    
+    q.options.forEach((opt, i) => {
+      const label = document.createElement("label");
+      
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `q${index}`;
+      radio.value = i;
+      
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(opt));
+      qDiv.appendChild(label);
+    });
+    
+    form.appendChild(qDiv);
+  });
+}
+    function startTimer() {
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").firstChild.textContent =
+        `⏳ সময় বাকি: ${minutes} মিনিট ${seconds < 10 ? '0' : ''}${seconds} সেকেন্ড`;
+    }
+    function submitQuiz() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+      const form = document.getElementById("quizForm");
+      const resultDiv = document.getElementById("result");
+      let correct = 0, wrong = 0;
+      questions.forEach((q, i) => {
+        const options = form.querySelectorAll(`input[name="q${i}"]`);
+        options.forEach((opt) => {
+          opt.disabled = true;
+          const label = opt.parentElement;
+          if (parseInt(opt.value) === q.answer) {
+            if (opt.checked) {
+              label.style.backgroundColor = "#d4edda";
+              correct++;
+            }
+          } else {
+            if (opt.checked) {
+              label.style.backgroundColor = "#f8d7da";
+              wrong++;
+            }
+          }
+        });
+      });
+      resultDiv.innerHTML = `✅ সঠিক উত্তর: ${correct} টি<br>❌ ভুল উত্তর: ${wrong} টি<br>📊 স্কোর: ${correct}/${questions.length}`;
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("resetBtn").style.display = "inline-block";
+      document.getElementById("showAnswersBtn").style.display = "inline-block";
+    }
+    function showCorrectAnswers() {
+      if(submitted){
+        const form = document.getElementById("quizForm");
+        questions.forEach((q, i) => {
+          const options = form.querySelectorAll(`input[name="q${i}"]`);
+          options.forEach((opt) => {
+            const label = opt.parentElement;
+            if (parseInt(opt.value) === q.answer) {
+              label.style.backgroundColor = "#c3e6cb";
+            }
+          });
+        });
+      }
+    }
+    function resetQuiz() {
+      submitted = false;
+      timeLeft = 25 * 60;
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("resetBtn").style.display = "none";
+      document.getElementById("result").innerHTML = '';
+      document.getElementById("showAnswersBtn").style.display = "none";
+      shuffleArray(questions);
+      renderQuestions();
+      const labels = document.querySelectorAll("#quizForm label");
+      labels.forEach(label => label.style.backgroundColor = "");
+      startTimer();
+    }
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+  </script>
+</body>
+</html>
