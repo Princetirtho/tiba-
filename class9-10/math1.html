@@ -3,16 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tiba Education</title>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G95KDJF46X"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-G95KDJF46X');
-</script>
+  <title>Class 9-10 Math | Tiba Education</title>
   <style>
     :root {
       --bg-light: #f0f4f8;
@@ -142,7 +133,6 @@
       }
     }
 
-
     .class-title {
       text-align: center;
       font-size: 26px;
@@ -155,50 +145,40 @@
       color: #FFD166;
     }
 
-    section {
-      background-color: white;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    body.dark section {
-      background-color: #2e2e2e;
-    }
-
-    .class-card-container {
+    .subjects {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 25px;
+      gap: 20px;
+      padding: 20px;
     }
 
-    .class-card {
+    .subject-card {
       background-color: white;
-      padding: 20px 30px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-size: 20px;
       color: #003366;
+      padding: 20px;
+      width: 200px;
+      border-radius: 12px;
       font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-size: 18px;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: 0.3s;
     }
 
-    .class-card:hover {
-      background-color: #FFD166;
-      color: black;
+    .subject-card:hover {
       transform: scale(1.05);
+      background-color: #e0f7ff;
     }
 
-    body.dark .class-card {
+    body.dark .subject-card {
       background-color: #2e2e2e;
       color: white;
-      box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
     }
 
-    body.dark .class-card:hover {
+    body.dark .subject-card:hover {
       background-color: #444;
       color: #FFD166;
     }
@@ -216,67 +196,46 @@
       color: #FFD700;
       text-decoration: none;
     }
-
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0;
-    }
-
-    .contact-row img {
-      width: 30px;
-      height: 30px;
-    }
-
-    .contact-row p {
-      margin: 0;
-    }
   </style>
 </head>
 <body>
+
   <!-- Navbar -->
   <nav>
     <div class="logo">📘 Tiba Education</div>
     <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
     <div class="menu" id="menu">
-          <a href="../index.html">Home</a>
+      <a href="../index.html">Home</a>
       <a href="../about.html">About</a>
       <a href="../class.html">Class</a>
       <a href="../contact.html">Contact</a>
-
       <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
     </div>
   </nav>
-<div class="class-title">📙Class 9-10 General math</div>
 
+  <!-- Title -->
+  <div class="class-title">📚 Class 9-10 Math</div>
 
-
-  <!-- Home -->
-  <section id="home">
-    <h2>🗣️</h2>
-    <p>এই সেকশনে এখনো কিছু যুক্ত করা হয়নি। খুব শীগ্রই নতুন কিছু যুক্ত করা হবে।</p>
-  </section>
-
-  <!-- About -->
-  <section id="about">
-    <h2>📞 কোনো প্রয়োজনে:</h2>
-
-    <div class="contact-row">
-      <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Email Icon">
-      <p>📧 <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
-    </div>
-
-    <div class="contact-row">
-      <img src="https://img.icons8.com/fluency/48/phone.png" alt="Phone Icon">
-      <p>📞 মোবাইল: 01304218750</p>
-    </div>
-
-    <div class="contact-row">
-      <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook Icon">
-      <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation" target="_blank">facebook.com/TibaEducation</a></p>
-    </div>
-  </section>
+  <!-- Subjects -->
+  <div class="subjects">
+    <a class="subject-card" href="ordinary.html">📙 বাস্তব সংখ্যা</a>
+    <a class="subject-card" href="set.html">📙 সেট ও ফাংশন</a>
+    <a class="subject-card" href="ordinary.html">📙 বীজগাণিতিক রাশি</a>
+    <a class="subject-card" href="ordinary.html">📙 সুচক ও লগারিদ্ম</a>
+    <a class="subject-card" href="ordinary.html">📙 এক চলক বিশিষ্ট সমীকরণ</a>
+    <a class="subject-card" href="ordinary.html">📙 রেখা কোন ত্রিভুজ</a>
+    <a class="subject-card" href="ordinary.html">📙 ব্যবহারিক জ্যামিতি</a>
+    <a class="subject-card" href="ordinary.html">📙 বৃত্ত</a>
+    <a class="subject-card" href="ordinary.html">📙 ত্রিকোণমিতিক অনুপাত</a>
+    <a class="subject-card" href="ordinary.html">📙 দূরত্ব ও উচ্চতা</a>
+    <a class="subject-card" href="ordinary.html">📙 বীজগাণিতিক অনুপাত ও সমানুপাত</a>
+    <a class="subject-card" href="ordinary.html">📙 দুই চলক বিশিষ্ট সরলসহ সমীকরণ</a>
+    <a class="subject-card" href="ordinary.html">📙 অসীম ধারা</a>
+    <a class="subject-card" href="ordinary.html">📙 অনুপাত, সদিসতা ও তাও প্রতি সমতা</a>
+    <a class="subject-card" href="ordinary.html">📙 ক্ষেত্রফল সম্পর্কিত উপপাদ্য সম্পাদ্য</a>
+    <a class="subject-card" href="ordinary.html">📙 পরিমিতি</a>
+    <a class="subject-card" href="ordinary.html">📙 পরিসংখ্যান</a>
+  </div>
 
   <!-- Footer -->
   <footer id="contact">
@@ -286,7 +245,7 @@
     <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
   </footer>
 
-  <!-- JavaScript -->
+  <!-- Script -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menu');
