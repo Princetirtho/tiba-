@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class 9 | Tiba Education - সেট (Set) বিস্তারিত</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+      --primary-color: #003366;
+      --accent-color: #FFD166;
+      --correct-bg: #d4edda;
+      --wrong-bg: #f8d7da;
+      --answer-bg: #c3e6cb;
+    }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: var(--primary-color);
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: var(--accent-color);
+      color: black;
+      transform: scale(1.05);
+    }
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: var(--accent-color);
+    }
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+      .menu.show {
+        display: flex;
+      }
+    }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+    h1, h2, h3 {
+      color: var(--primary-color);
+    }
+    body.dark h1, body.dark h2, body.dark h3 {
+      color: var(--accent-color);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      font-weight: 900;
+    }
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 5px;
+    }
+    p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+    code, pre {
+      font-family: Consolas, monospace;
+      background: #eee;
+      padding: 3px 6px;
+      border-radius: 5px;
+      color: #333;
+      font-size: 1rem;
+    }
+    body.dark code, body.dark pre {
+      background: #444;
+      color: #FFD166;
+    }
+    ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .example {
+      background: #fef3c7;
+      border-left: 6px solid var(--accent-color);
+      padding: 10px 15px;
+      margin: 15px 0 25px 0;
+      font-style: italic;
+      color: #444;
+    }
+    body.dark .example {
+      background: #5c4d00;
+      color: #fff;
+    }
+    /* Quiz styles */
+    #quizSection {
+      padding: 30px 0 50px;
+      text-align: center;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-top: 50px;
+    }
+    body.dark #quizSection {
+      background: #2e2e2e;
+    }
+    .question-block {
+      background: white;
+      padding: 15px 20px;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1.1rem;
+    }
+    body.dark .question-block {
+      background-color: #3b3b3b;
+      color: white;
+      box-shadow: 0 0 8px rgba(255,255,255,0.1);
+    }
+    label {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 7px;
+      background-color: white;
+      color: var(--primary-color);
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    body.dark label {
+      background-color: #444;
+      color: white;
+    }
+    input[type="radio"] {
+      margin-right: 12px;
+      cursor: pointer;
+    }
+    input[type="radio"]:disabled + label {
+      cursor: not-allowed;
+    }
+    #submitBtn, #resetBtn, #startBtn, #showAnswersBtn {
+      padding: 12px 28px;
+      font-size: 18px;
+      margin: 12px 8px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    #startBtn { background: #007bff; color: white; }
+    #submitBtn { background: #28a745; color: white; }
+    #resetBtn { background: #ffc107; color: black; display: none; }
+    #showAnswersBtn { background: #17a2b8; color: white; margin-left: 8px; display: none; }
+    #submitBtn:disabled {
+      background: #a5d6a7;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    #result {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 30px;
+      color: var(--primary-color);
+    }
+    body.dark #result {
+      color: var(--accent-color);
+    }
+    #quizContainer {
+      display: none;
+    }
+    #timer {
+      position: sticky;
+      top: 75px;
+      background: white;
+      padding: 12px 18px;
+      z-index: 999;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      max-width: 900px;
+      margin: 0 auto 30px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    body.dark #timer {
+      background: #1e1e1e;
+      color: var(--accent-color);
+      box-shadow: 0 3px 12px rgba(255, 209, 102, 0.4);
+    }
+   footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 15px;
+  margin-top: 80%;
+}
+
+footer a {
+  color: #FFD700;
+  text-decoration: none;
+}  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../class.html">Class</a>
+      <a href="../contact.html">Contact</a>
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+
+  <main>
+    <h1>সেট (Set) — সম্পূর্ণ আলোচনা</h1>
+
+    <h2>১. সেট কী?</h2>
+    <p>গণিতে <strong>সেট</strong> বলতে বোঝায় এমন একটি উপাদানসমষ্টিকে, যেখানে প্রতিটি উপাদান সুস্পষ্টভাবে নির্ধারিত থাকে। যেমন, ছাত্রদের নামের তালিকা, পরীক্ষার নম্বরের সেট ইত্যাদি।</p>
+    <p>সেটের প্রতিটি উপাদান ভিন্ন এবং সেটির সদস্যত্ব স্পষ্টভাবে বোঝা যায়।</p>
+
+    <div class="example">
+      উদাহরণ: \{2, 4, 6, 8\} হলো এমন একটি সেট যা ২, ৪, ৬, ৮ নাম্বারগুলো উপাদান হিসেবে রাখে।
+    </div>
+
+    <h2>২. সেট লেখার পদ্ধতি</h2>
+    <p><strong>বর্ণনামূলক:</strong> যেমন, “৫০ এর নিচে ৫ এর গুণিতক”</p>
+    <p><strong>তালিকাভুক্ত:</strong> \{5, 10, 15, 20, 25, 30, 35, 40, 45\}</p>
+    <p><strong>গঠনমূলক:</strong> \{x : x \leq 50 \text{ এবং } x \text{ ৫ এর গুণিতক}\}</p>
+
+   <!-- আগের অংশ থেকে যুক্ত করবে main এর ভিতরে -->
+
+    <h2>৩. সেটের সাধারণ চিহ্ন</h2>
+    <ul>
+      <li><code>∈</code> — সদস্য (element of)</li>
+      <li><code>∉</code> — সদস্য নয় (not element of)</li>
+      <li><code>⊆</code> — উপসেট (subset)</li>
+      <li><code>∪</code> — ইউনিয়ন (union)</li>
+      <li><code>∩</code> — ছেদ (intersection)</li>
+      <li><code>∅</code> — শূন্য সেট (empty set)</li>
+    </ul>
+
+    <h2>৪. সেটের মৌলিক প্রকারভেদ</h2>
+    <ul>
+      <li><strong>শূন্য সেট (Empty set):</strong> যার কোনো উপাদান নেই। যেমন, ∅ বা { }</li>
+      <li><strong>সীমাবদ্ধ সেট (Finite set):</strong> যার উপাদানের সংখ্যা সীমিত। যেমন, {1, 2, 3}</li>
+      <li><strong>অসীম সেট (Infinite set):</strong> যার অসীম উপাদান। যেমন, প্রাকৃতিক সংখ্যা N = {1, 2, 3, ...}</li>
+    </ul>
+
+    <h2>৫. সেটের ইউনিয়ন ও ছেদ</h2>
+    <p><strong>ইউনিয়ন (Union):</strong> দুটি সেট A এবং B এর ইউনিয়ন হলো এমন একটি সেট যা A ও B এর সকল সদস্যকে ধারণ করে।</p>
+    <p>লেখা হয়: A \cup B</p>
+    <p><strong>ছেদ (Intersection):</strong> দুটি সেটের ছেদ হলো এমন একটি সেট যা উভয় সেটের সাধারণ সদস্যকে ধারণ করে।</p>
+    <p>লেখা হয়: A \cap B</p>
+
+    <div class="example">
+      উদাহরণ: A = \{1,2,3\}, B = \{2,3,4\} হলে<br>
+      A \cup B = \{1,2,3,4\}<br>
+      A \cap B = \{2,3\}
+    </div>
+
+    <h2>৬. সেটের পার্থক্য এবং পরিপূরক</h2>
+    <p><strong>পার্থক্য (Difference):</strong> A - B হলো A সেটের এমন উপাদান যেগুলো B সেটে নেই।</p>
+    <p><strong>পরিপূরক (Complement):</strong> ইউনিভার্সাল সেট U এর পরিপূরক হলো U সেটের সেই সকল উপাদান যেগুলো A সেটে নেই।</p>
+
+    <h2>৭. সেটের উপসেট ও প্রকৃত উপসেট</h2>
+    <p><strong>উপসেট (Subset):</strong> যদি প্রতিটি A সেটের সদস্য B সেটেও থাকে, তবে A কে B এর উপসেট বলা হয়।</p>
+    <p>লিখিত হয়: A \subseteq B</p>
+    <p><strong>প্রকৃত উপসেট (Proper Subset):</strong> যদি A একটি উপসেট হয় B এর, কিন্তু A ও B সমান না হয়, তখন A কে B এর প্রকৃত উপসেট বলা হয়।</p>
+    <p>লিখিত হয়: A \subset B</p>
+
+    <h2>৮. সেটের কার্ডিনালিটি (Cardinality)</h2>
+    <p>সেটের উপাদানের সংখ্যা তাকে সেটের কার্ডিনালিটি বলে। n(A) দিয়ে প্রকাশ করা হয়।</p>
+    <p>যেমন: A = \{1,2,3,4\} হলে, n(A) = 4</p>
+
+    <h2>৯. ভেন ডায়াগ্রাম (Venn Diagram)</h2>
+    <p>সেটের সম্পর্ক বুঝাতে ভেন ডায়াগ্রাম ব্যবহার করা হয়, যেখানে প্রতিটি সেট একটি বৃত্ত দ্বারা প্রতিনিধিত্ব করে।</p>
+
+    <h2>১০. গুরুত্বপূর্ণ সূত্রাবলি</h2>
+    <ul>
+      <li>n(A \cup B) = n(A) + n(B) - n(A \cap B)</li>
+      <li>n(U) = n(A) + n(A') (যেখানে A' হলো A এর পরিপূরক)</li>
+    </ul>
+
+    <h2>১১. ব্যবহারিক গুরুত্ব</h2>
+    <p>সেট থিওরি গণিতের বুনিয়াদি। লজিক, বীজগণিত, প্রোগ্রামিং, ডেটাবেজ এবং দৈনন্দিন জীবনের সমস্যা সমাধানে সেটের ধারণা অপরিহার্য।</p>
+
+    <hr style="margin: 40px 0; border: 1px solid var(--accent-color);">
+
+    <h1>সেট (Set) বিষয়ক ৩০ টি MCQ কুইজ</h1>
+
+    <div id="quizSection">
+      <button id="startBtn" onclick="startQuiz()">🚀 শুরু করুন</button>
+      <div id="quizContainer">
+        <div id="timer">⏳ সময় বাকি: ২৫:০০ 
+          <button id="showAnswersBtn" onclick="showCorrectAnswers()">✅ সব সঠিক উত্তর দেখুন</button>
+        </div>
+        <form id="quizForm"></form>
+        <button id="submitBtn" onclick="submitQuiz()">✅ জমা দিন</button>
+        <button id="resetBtn" onclick="resetQuiz()">🔁 নতুন করে শুরু</button>
+        <div id="result"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+
+<script>
+  // Navbar hamburger toggle
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    const hamburger = document.getElementById('hamburgerBtn');
+    menu.classList.toggle('show');
+    hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+  }
+  // Dark mode toggle
+  function toggleDark() {
+    document.body.classList.toggle('dark');
+    const btn = document.getElementById('darkToggleBtn');
+    btn.textContent = document.body.classList.contains('dark') ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+  }
+
+  // Quiz questions array
+  const questions = [
+    {question: "১. সেট কী?", options:["উপাদানের সমষ্টি","একটি সংখ্যা","একটি রেখা","কোনোটিই নয়"], answer: 0},
+    {question: "২. শূন্য সেটের আরেক নাম কী?", options:["শূন্য","ফাঁকা সেট","সীমাহীন সেট","উপসেট"], answer: 1},
+    {question: "৩. যদি A = {1,2,3} এবং B = {2,3,4}, তবে A ∪ B কী?", options:["{1,2,3,4}","{2,3}","{1,4}","{1,2}"], answer: 0},
+    {question: "৪. যদি A = {1,2,3} এবং B = {2,3,4}, তবে A ∩ B কী?", options:["{2,3}","{1,2}","{1,3}","{4}"], answer: 0},
+    {question: "৫. ‘⊆’ চিহ্নের অর্থ কী?", options:["উপসেট","সদস্য","পরিপূরক","সমান"], answer: 0},
+    {question: "৬. দুটি সেটের ছেদ হলো?", options:["যে সকল উপাদান দুটো সেটেই আছে","মোট উপাদান","অপর sets এর উপাদান","কোনোটিই নয়"], answer: 0},
+    {question: "৭. পরিপূরক সেট কী?", options:["একই সেট","বিশেষ সেট","সেটের বাহিরের উপাদান","শূন্য সেট"], answer: 2},
+    {question: "৮. কার্ডিনালিটি কী নির্দেশ করে?", options:["সেটের উপাদানের সংখ্যা","সেটের নাম","সেটের সীমা","সেটের গঠন"], answer: 0},
+    {question: "৯. A - B কি নির্দেশ করে?", options:["A এর এমন উপাদান যা B তে নেই","A ও B এর ছেদ","A ও B এর ইউনিয়ন","B এর উপাদান"], answer: 0},
+    {question: "১০. সেটের কোন প্রকারভেদ নেই?", options:["সীমাবদ্ধ","অসীম","শূন্য","পরিমিত"], answer: 3},
+    {question: "১১. ভেন ডায়াগ্রামে দুটি সেটের ছেদ কোন অংশ?", options:["বৃত্তের ওভারল্যাপ","প্রথম সেট","দ্বিতীয় সেট","শূন্য"], answer: 0},
+    {question: "১২. ইউনিভার্সাল সেট কি?", options:["সেটের পূর্ণ সম্ভাব্য সদস্য","শূন্য সেট","সীমিত সেট","উপসেট"], answer: 0},
+    {question: "১৩. যদি A ⊆ B হয়, তবে?", options:["A এর সব সদস্য B তেও আছে","B এর সব সদস্য A তেও আছে","A এবং B সমান","কোনোটিই নয়"], answer: 0},
+    {question: "১৪. '∅' চিহ্ন কী নির্দেশ করে?", options:["শূন্য সেট","বিপরীত সেট","উপসেট","সদস্য"], answer: 0},
+    {question: "১৫. যদি A = {1,2} এবং B = {1,2}, তাহলে A ⊂ B কী?", options:["না","হ্যাঁ","সমান","অর্থহীন"], answer: 0},
+    {question: "১৬. A ∪ ∅ কী সমান?", options:["A","∅","U","শূন্য"], answer: 0},
+    {question: "১৭. কোনটি অসীম সেটের উদাহরণ?", options:["প্রাকৃতিক সংখ্যা","{1,2,3}","{a,b,c}","∅"], answer: 0},
+    {question: "১৮. দুটি সেটের ইউনিয়ন কত?", options:["দুই সেটের সকল উপাদান","দুই সেটের ছেদ","একই সেট","শূন্য সেট"], answer: 0},
+    {question: "১৯. ‘∩’ চিহ্নের অর্থ কী?", options:["ছেদ","ইউনিয়ন","উপসেট","সদস্য"], answer: 0},
+    {question: "২০. ‘∈’ চিহ্নের অর্থ কী?", options:["সদস্য","উপসেট","সমান","পরিপূরক"], answer: 0},
+    {question: "২১. যদি A = {1,2,3} এবং B = {1,2,3,4}, তাহলে A ⊆ B সত্য কি?", options:["সত্য","মিথ্যা","অর্ধেক","অজানা"], answer: 0},
+    {question: "২২. একটি সেটের উপাদান সংখ্যা ৫, তাহলে সেটটি কী ধরনের?", options:["সীমাবদ্ধ","অসীম","শূন্য","অজানা"], answer: 0},
+    {question: "২৩. ‘∉’ চিহ্নের অর্থ কী?", options:["সদস্য নয়","সদস্য","উপসেট","পরিপূরক"], answer: 0},
+    {question: "২৪. সেট A এবং B এর মধ্যে সম্পর্ক কী?", options:["উপসেট, ইউনিয়ন, ছেদ","একই নয়","সমান নয়","কোনোটিই নয়"], answer: 0},
+    {question: "২৫. A \cup B এবং A \cap B এর মধ্যে পার্থক্য কী?", options:["ইউনিয়ন সব সদস্য, ছেদ সাধারণ সদস্য","একই","বিপরীত","শূন্য"], answer: 0},
+    {question: "২৬. পরিপূরক সেটের চিহ্ন কী?", options:["A'","A","B","C"], answer: 0},
+    {question: "২৭. শূন্য সেটের কার্ডিনালিটি কত?", options:["০","১","অসীম","অজানা"], answer: 0},
+    {question: "২৮. উপসেট সেটের সংজ্ঞা?", options:["এক সেটের সব সদস্য অন্য সেটেও থাকে","এক সেটের কিছু সদস্য অন্য সেটেও থাকে","সেটের সংখ্যা","অজানা"], answer: 0},
+    {question: "২৯. n(A \cup B) = n(A) + n(B) - n(A \cap B) সূত্রটি কী নির্দেশ করে?", options:["সেটের ইউনিয়ন ও ছেদ থেকে মোট সদস্যের সংখ্যা","উপসেট","শূন্য সেট","অজানা"], answer: 0},
+    {question: "৩০. ভেন ডায়াগ্রামে দুই সেটের ইউনিয়ন কেমন দেখায়?", options:["দুটি বৃত্তের মিলিত অংশ","একটি বৃত্ত","দুটি বৃত্ত আলাদা","শূন্য"], answer: 0},
+  ];
+
+  let timerInterval;
+  let timeLeft = 25 * 60;
+  let submitted = false;
+
+  function startQuiz() {
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("quizContainer").style.display = "block";
+    submitted = false;
+    timeLeft = 25 * 60;
+    document.getElementById("submitBtn").disabled = false;
+    document.getElementById("resetBtn").style.display = "none";
+    document.getElementById("showAnswersBtn").style.display = "none";
+    document.getElementById("result").innerHTML = '';
+    shuffleArray(questions);
+    renderQuestions();
+    startTimer();
+  }
+
+  function renderQuestions() {
+    const form = document.getElementById("quizForm");
+    form.innerHTML = '';
+    questions.forEach((q, index) => {
+      const qDiv = document.createElement("div");
+      qDiv.classList.add("question-block");
+      const questionTitle = document.createElement("p");
+      questionTitle.textContent = `${index + 1}. ${q.question}`;
+      qDiv.appendChild(questionTitle);
+      q.options.forEach((opt, i) => {
+        const label = document.createElement("label");
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${index}`;
+        radio.value = i;
+        label.appendChild(radio);
+        label.appendChild(document.createTextNode(opt));
+        qDiv.appendChild(label);
+      });
+      form.appendChild(qDiv);
+    });
+  }
+
+  function startTimer() {
+    updateTimerDisplay();
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        submitQuiz();
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById("timer").firstChild.textContent =
+      `⏳ সময় বাকি: ${minutes} মিনিট ${seconds < 10 ? '0' : ''}${seconds} সেকেন্ড`;
+  }
+
+  function submitQuiz() {
+    if (submitted) return;
+    submitted = true;
+    clearInterval(timerInterval);
+    const form = document.getElementById("quizForm");
+    let correct = 0, wrong = 0;
+    questions.forEach((q, i) => {
+      const options = form.querySelectorAll(`input[name="q${i}"]`);
+      options.forEach((opt) => {
+        opt.disabled = true;
+        const label = opt.parentElement;
+        if (parseInt(opt.value) === q.answer) {
+          if (opt.checked) {
+            label.style.backgroundColor = "#d4edda";
+            correct++;
+          }
+        } else {
+          if (opt.checked) {
+            label.style.backgroundColor = "#f8d7da";
+            wrong++;
+          }
+        }
+      });
+    });
+    document.getElementById("result").innerHTML =
+      `✅ সঠিক উত্তর: ${correct} টি<br>❌ ভুল উত্তর: ${wrong} টি<br>📊 স্কোর: ${correct}/${questions.length}`;
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("resetBtn").style.display = "inline-block";
+    document.getElementById("showAnswersBtn").style.display = "inline-block";
+  }
+
+  function showCorrectAnswers() {
+    if (!submitted) return;
+    const form = document.getElementById("quizForm");
+    questions.forEach((q, i) => {
+      const options = form.querySelectorAll(`input[name="q${i}"]`);
+      options.forEach((opt) => {
+        const label = opt.parentElement;
+        if (parseInt(opt.value) === q.answer) {
+          label.style.backgroundColor = "#c3e6cb";
+        }
+      });
+    });
+  }
+
+  function resetQuiz() {
+    submitted = false;
+    timeLeft = 25 * 60;
+    document.getElementById("submitBtn").disabled = false;
+    document.getElementById("resetBtn").style.display = "none";
+    document.getElementById("result").innerHTML = '';
+    document.getElementById("showAnswersBtn").style.display = "none";
+    shuffleArray(questions);
+    renderQuestions();
+    startTimer();
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+</script>
+</body>
+</html>
