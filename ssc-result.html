@@ -233,6 +233,16 @@
   background: linear-gradient(135deg, #218838, #1e7e34);
   transform: scale(1.02);
 }
+.result-box select {
+  background-color: rgba(255,255,255,0.1);
+  color: #f1f1f1; /* light text */
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.result-box select option {
+  background-color: #1a1a1a; /* option background */
+  color: #ffffff; /* option text */
+}
 
 /* রেজাল্ট বক্স */
 .animated-result {
@@ -302,13 +312,37 @@
       <select id="year" required>
         <option value="">সাল নির্বাচন করুন</option>
         <!-- Auto Year Options -->
-        <script>
-          const yearSelect = document.currentScript.parentElement.querySelector('#year');
-          for (let y = 2000; y <= 2025; y++) {
-            yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
-          }
-        </script>
-      </select>
+     <label for="year">পরীক্ষার সাল:</label>
+    <select id="year" required>
+      <option value="">সাল নির্বাচন করুন</option>
+      <option value="2000">2000</option>
+      <option value="2001">2001</option>
+      <option value="2002">2002</option>
+      <option value="2003">2003</option>
+      <option value="2004">2004</option>
+      <option value="2005">2005</option>
+      <option value="2006">2006</option>
+      <option value="2007">2007</option>
+      <option value="2008">2008</option>
+      <option value="2009">2009</option>
+      <option value="2010">2010</option>
+      <option value="2011">2011</option>
+      <option value="2012">2012</option>
+      <option value="2013">2013</option>
+      <option value="2014">2014</option>
+      <option value="2015">2015</option>
+      <option value="2016">2016</option>
+      <option value="2017">2017</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+    </select>
+
 
       <label for="board">বোর্ড:</label>
       <select id="board" required>
