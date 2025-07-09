@@ -294,7 +294,7 @@
       return;
     }
 
-    fetch(`results/${board}_${year}.json`)
+    fetch(`all_results_json/${board}_${year}.json`)
       .then(res => res.json())
       .then(data => {
         const student = data.find(item => item.roll === roll && item.reg === reg);
