@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SSC Result Checker | Tiba Education</title>
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --nav-bg: #0066cc;
+      --nav-bg-dark: #003366;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    nav {
+      background-color: var(--nav-bg);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    body.dark nav {
+      background-color: var(--nav-bg-dark);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu a,
+    .dark-toggle {
+      text-decoration: none;
+      font-size: 17px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background-color: white;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      width: 160px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .menu a:hover,
+    .dark-toggle:hover {
+      background-color: #FFD166;
+      color: black;
+      transform: scale(1.05);
+    }
+    body.dark .menu a,
+    body.dark .dark-toggle {
+      background-color: #2e2e2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+    body.dark .menu a:hover,
+    body.dark .dark-toggle:hover {
+      background-color: #444;
+      color: #FFD166;
+    }
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: #fdf0d5;
+        padding: 15px 0;
+        z-index: 2;
+      }
+      body.dark .menu {
+        background-color: #2a2a2a;
+      }
+      .menu a,
+      .dark-toggle {
+        width: 90%;
+        margin: 8px auto;
+      }
+      .menu.show {
+        display: flex;
+      }
+    }
+    section {
+      background-color: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    body.dark section {
+      background-color: #2e2e2e;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      font-size: 15px;
+    }
+    footer a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    /* Result Checker Specific */
+    form label {
+      font-weight: bold;
+    }
+    form input, form select, form button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    form button {
+      background-color: #007BFF;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      background: #e9f7ef;
+      padding: 15px;
+      border-left: 5px solid green;
+    }
+    table {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 6px;
+      text-align: left;
+      border: 1px solid #ccc;
+    }
+    th {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">📘 Tiba Education</div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="class.html">Class</a>
+      <a href="contact.html">Contact</a>
+      <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()">🌙 Dark Mode: OFF</button>
+    </div>
+  </nav>
+
+<section id="ssc-result-checker">
+  <h2>SSC Result Checker</h2>
+  <form id="resultForm">
+    <label for="roll">রোল নম্বর:</label>
+    <input type="text" id="roll" required>
+
+    <label for="reg">রেজিস্ট্রেশন নম্বর:</label>
+    <input type="text" id="reg" required>
+
+  <label for="year">পরীক্ষার সাল:</label>
+<select id="year" required>
+  <option value="">সাল নির্বাচন করুন</option>
+  <option value="2000">2000</option>
+  <option value="2001">2001</option>
+  <option value="2002">2002</option>
+  <option value="2003">2003</option>
+  <option value="2004">2004</option>
+  <option value="2005">2005</option>
+  <option value="2006">2006</option>
+  <option value="2007">2007</option>
+  <option value="2008">2008</option>
+  <option value="2009">2009</option>
+  <option value="2010">2010</option>
+  <option value="2011">2011</option>
+  <option value="2012">2012</option>
+  <option value="2013">2013</option>
+  <option value="2014">2014</option>
+  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+  <option value="2018">2018</option>
+  <option value="2019">2019</option>
+  <option value="2020">2020</option>
+  <option value="2021">2021</option>
+  <option value="2022">2022</option>
+  <option value="2023">2023</option>
+  <option value="2024">2024</option>
+  <option value="2025">2025</option>
+</select>
+<label for="board">বোর্ড:</label>
+<select id="board" required>
+  <option value="dhaka">ঢাকা (Dhaka)</option>
+  <option value="rajshahi">রাজশাহী (Rajshahi)</option>
+  <option value="chittagong">চট্টগ্রাম (Chittagong)</option>
+  <option value="sylhet">সিলেট (Sylhet)</option>
+  <option value="barisal">বরিশাল (Barisal)</option>
+  <option value="dinajpur">দিনাজপুর (Dinajpur)</option>
+  <option value="jessore">যশোর (Jessore)</option>
+  <option value="comilla">কুমিল্লা (Comilla)</option>
+  <option value="mymensingh">ময়মনসিংহ (Mymensingh)</option>
+</select>
+
+    <label id="checkLabel">গণনা লিখুন: </label>
+    <input type="number" id="checkInput" placeholder="উত্তর লিখুন" required>
+
+    <button type="submit">রেজাল্ট দেখুন</button>
+  </form>
+
+  <div id="result"></div>
+  <button id="resetBtn" style="display:none; margin-top:15px;">🔁 রিসেট করুন</button>
+</section>
+
+
+  <footer id="contact">
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+
+<script>
+  let num1 = 0, num2 = 0;
+
+  function generateCheckQuestion() {
+    num1 = Math.floor(Math.random() * 10) + 1;
+    num2 = Math.floor(Math.random() * 10) + 1;
+    document.getElementById("checkLabel").innerText = `গণনা লিখুন: ${num1} + ${num2} =`;
+  }
+
+  generateCheckQuestion();
+
+  document.getElementById("resultForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const roll = document.getElementById("roll").value.trim();
+    const reg = document.getElementById("reg").value.trim();
+    const board = document.getElementById("board").value;
+    const year = document.getElementById("year").value;
+    const checkAns = parseInt(document.getElementById("checkInput").value);
+
+    const correctAns = num1 + num2;
+
+    const resultDiv = document.getElementById("result");
+    const resetBtn = document.getElementById("resetBtn");
+
+    if (checkAns !== correctAns) {
+      resultDiv.innerHTML = "<span style='color:red'>গণনার উত্তর সঠিক নয়। দয়া করে আবার চেষ্টা করুন।</span>";
+      return;
+    }
+
+    fetch(`results/${board}_${year}.json`)
+      .then(res => res.json())
+      .then(data => {
+        const student = data.find(item => item.roll === roll && item.reg === reg);
+        if (student) {
+          let subjectRows = '';
+          for (let subject in student.subjects) {
+            subjectRows += `<tr><td>${subject}</td><td>${student.subjects[subject]}</td></tr>`;
+          }
+          resultDiv.innerHTML = `
+            <strong>নাম:</strong> ${student.name} <br>
+            <strong>GPA:</strong> ${student.gpa} <br>
+            <strong>গ্রেড:</strong> ${student.grade} <br>
+            <br><strong>বিষয়ভিত্তিক নম্বর:</strong>
+            <table>
+              <thead><tr><th>বিষয়</th><th>নম্বর</th></tr></thead>
+              <tbody>${subjectRows}</tbody>
+            </table>
+          `;
+          resetBtn.style.display = "block";
+        } else {
+          resultDiv.innerHTML = "রেজাল্ট খুঁজে পাওয়া যায়নি।";
+          resetBtn.style.display = "block";
+        }
+      })
+      .catch(() => {
+        resultDiv.innerHTML = "রেজাল্ট লোড করতে সমস্যা হচ্ছে।";
+        resetBtn.style.display = "block";
+      });
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function() {
+    document.getElementById("resultForm").reset();
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("resetBtn").style.display = "none";
+    generateCheckQuestion();
+  });
+  
+  
+  
+  
+  
+      function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+</script>
+</body>
+</html>
