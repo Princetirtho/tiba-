@@ -140,6 +140,7 @@
       text-decoration: none;
     }
 
+    /* Result Checker Specific */
     form label {
       font-weight: bold;
     }
@@ -194,67 +195,159 @@
     </div>
   </nav>
 
-  <section id="ssc-result-checker">
-    <h2>SSC Result Checker</h2>
-    <form id="resultForm">
-      <label for="roll">রোল নম্বর:</label>
-      <input type="text" id="roll" required>
+<section id="ssc-result-checker">
+  <h2>SSC Result Checker</h2>
+  <form id="resultForm">
+    <label for="roll">রোল নম্বর:</label>
+    <input type="text" id="roll" required>
 
-      <label for="reg">রেজিস্ট্রেশন নম্বর:</label>
-      <input type="text" id="reg" required>
+    <label for="reg">রেজিস্ট্রেশন নম্বর:</label>
+    <input type="text" id="reg" required>
 
-      <label for="year">পরীক্ষার সাল:</label>
-      <select id="year" required>
-        <option value="">সাল নির্বাচন করুন</option>
-        <option value="2000">2000</option>
-        <option value="2001">2001</option>
-        <option value="2002">2002</option>
-        <option value="2003">2003</option>
-        <option value="2004">2004</option>
-        <option value="2005">2005</option>
-        <option value="2006">2006</option>
-        <option value="2007">2007</option>
-        <option value="2008">2008</option>
-        <option value="2009">2009</option>
-        <option value="2010">2010</option>
-        <option value="2011">2011</option>
-        <option value="2012">2012</option>
-        <option value="2013">2013</option>
-        <option value="2014">2014</option>
-        <option value="2015">2015</option>
-        <option value="2016">2016</option>
-        <option value="2017">2017</option>
-        <option value="2018">2018</option>
-        <option value="2019">2019</option>
-        <option value="2020">2020</option>
-        <option value="2021">2021</option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
-        <option value="2025">2025</option>
-      </select>
-
-      <label for="board">বোর্ড:</label>
-      <select id="board" required>
-        <option value="dhaka">ঢাকা (Dhaka)</option>
-        <option value="rajshahi">রাজশাহী (Rajshahi)</option>
-        <option value="chittagong">চট্টগ্রাম (Chittagong)</option>
-        <option value="sylhet">সিলেট (Sylhet)</option>
-        <option value="barisal">বরিশাল (
-Barisal)</option>
-<option value="dinajpur">দিনাজপুর (Dinajpur)</option>
-<option value="madrasah">মাদ্রাসা (Madrasah)</option>
-<option value="technical">টেকনিক্যাল (Technical)</option>
+  <label for="year">পরীক্ষার সাল:</label>
+<select id="year" required>
+  <option value="">সাল নির্বাচন করুন</option>
+  <option value="2000">2000</option>
+  <option value="2001">2001</option>
+  <option value="2002">2002</option>
+  <option value="2003">2003</option>
+  <option value="2004">2004</option>
+  <option value="2005">2005</option>
+  <option value="2006">2006</option>
+  <option value="2007">2007</option>
+  <option value="2008">2008</option>
+  <option value="2009">2009</option>
+  <option value="2010">2010</option>
+  <option value="2011">2011</option>
+  <option value="2012">2012</option>
+  <option value="2013">2013</option>
+  <option value="2014">2014</option>
+  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+  <option value="2018">2018</option>
+  <option value="2019">2019</option>
+  <option value="2020">2020</option>
+  <option value="2021">2021</option>
+  <option value="2022">2022</option>
+  <option value="2023">2023</option>
+  <option value="2024">2024</option>
+  <option value="2025">2025</option>
+</select>
+<label for="board">বোর্ড:</label>
+<select id="board" required>
+  <option value="dhaka">ঢাকা (Dhaka)</option>
+  <option value="rajshahi">রাজশাহী (Rajshahi)</option>
+  <option value="chittagong">চট্টগ্রাম (Chittagong)</option>
+  <option value="sylhet">সিলেট (Sylhet)</option>
+  <option value="barisal">বরিশাল (Barisal)</option>
+  <option value="dinajpur">দিনাজপুর (Dinajpur)</option>
+  <option value="jessore">যশোর (Jessore)</option>
+  <option value="comilla">কুমিল্লা (Comilla)</option>
+  <option value="mymensingh">ময়মনসিংহ (Mymensingh)</option>
 </select>
 
-bash
-Copy
-Edit
-  <label for="captcha">ক্যাপচা লিখুন:</label>
-  <input type="text" id="captcha" required>
+    <label id="checkLabel">গণনা লিখুন: </label>
+    <input type="number" id="checkInput" placeholder="উত্তর লিখুন" required>
 
-  <button type="submit">ফলাফল দেখুন</button>
-</form>
+    <button type="submit">রেজাল্ট দেখুন</button>
+  </form>
 
-<div id="result"></div>
-</section> <footer> &copy; 2024 Tiba Education. All rights reserved. | <a href="privacy.html">Privacy Policy</a> </footer> <script> // Dark mode toggle const darkToggleBtn = document.getElementById('darkToggleBtn'); darkToggleBtn.textContent = "🌙 Dark Mode: OFF"; function toggleDark() { document.body.classList.toggle('dark'); if (document.body.classList.contains('dark')) { darkToggleBtn.textContent = "☀️ Dark Mode: ON"; } else { darkToggleBtn.textContent = "🌙 Dark Mode: OFF"; } } // Hamburger menu toggle const hamburgerBtn = document.getElementById('hamburgerBtn'); const menu = document.getElementById('menu'); function toggleMenu() { menu.classList.toggle('show'); } // Result form submit (dummy example) const form = document.getElementById('resultForm'); const resultDiv = document.getElementById('result'); form.addEventListener('submit', function(e) { e.preventDefault(); const roll = document.getElementById('roll').value.trim(); const reg = document.getElementById('reg').value.trim(); const year = document.getElementById('year').value; const board = document.getElementById('board').value; const captcha = document.getElementById('captcha').value.trim(); if (!roll || !reg || !year || !board || !captcha) { alert('সকল ফিল্ড পূরণ করুন।'); return; } // Dummy result display resultDiv.innerHTML = ` <h3>ফলাফল</h3> <p><strong>রোল:</strong> ${roll}</p> <p><strong>রেজিস্ট্রেশন:</strong> ${reg}</p> <p><strong>সাল:</strong> ${year}</p> <p><strong>বোর্ড:</strong> ${board}</p> <p><strong>ক্যাপচা:</strong> ${captcha}</p> <table> <thead> <tr> <th>বিষয়</th> <th>গ্রেড</th> <th>মোট নম্বর</th> </tr> </thead> <tbody> <tr> <td>বাংলা</td> <td>A+</td> <td>100</td> </tr> <tr> <td>ইংরেজি</td> <td>A</td> <td>95</td> </tr> <tr> <td>গণিত</td> <td>A+</td> <td>100</td> </tr> </tbody> </table> `; }); </script> </body> </html>
+  <div id="result"></div>
+  <button id="resetBtn" style="display:none; margin-top:15px;">🔁 রিসেট করুন</button>
+</section>
+
+
+  <footer id="contact">
+    <p>📧 যোগাযোগ: <a href="mailto:tirthochakroborty04@gmail.com">tirthochakroborty04@gmail.com</a></p>
+    <p>📞 মোবাইল: 01304218750</p>
+    <p>🌐 ফেসবুক: <a href="https://facebook.com/TibaEducation">facebook.com/TibaEducation</a></p>
+    <p style="margin-top: 10px;">© 2025 <strong>Tiba Education</strong> — সমস্ত অধিকার সংরক্ষিত।</p>
+  </footer>
+
+<script>
+  let num1 = 0, num2 = 0;
+
+  function generateCheckQuestion() {
+    num1 = Math.floor(Math.random() * 10) + 1;
+    num2 = Math.floor(Math.random() * 10) + 1;
+    document.getElementById("checkLabel").innerText = `গণনা লিখুন: ${num1} + ${num2} =`;
+  }
+
+  generateCheckQuestion();
+
+  document.getElementById("resultForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const roll = document.getElementById("roll").value.trim();
+    const reg = document.getElementById("reg").value.trim();
+    const board = document.getElementById("board").value;
+    const year = document.getElementById("year").value;
+    const checkAns = parseInt(document.getElementById("checkInput").value);
+
+    const correctAns = num1 + num2;
+
+    const resultDiv = document.getElementById("result");
+    const resetBtn = document.getElementById("resetBtn");
+
+    if (checkAns !== correctAns) {
+      resultDiv.innerHTML = "<span style='color:red'>গণনার উত্তর সঠিক নয়। দয়া করে আবার চেষ্টা করুন।</span>";
+      return;
+    }
+
+    fetch(`results/${board}_${year}.json`)
+      .then(res => res.json())
+      .then(data => {
+        const student = data.find(item => item.roll === roll && item.reg === reg);
+        if (student) {
+          let subjectRows = '';
+          for (let subject in student.subjects) {
+            subjectRows += `<tr><td>${subject}</td><td>${student.subjects[subject]}</td></tr>`;
+          }
+          resultDiv.innerHTML = `
+            <strong>নাম:</strong> ${student.name} <br>
+            <strong>GPA:</strong> ${student.gpa} <br>
+            <strong>গ্রেড:</strong> ${student.grade} <br>
+            <br><strong>বিষয়ভিত্তিক নম্বর:</strong>
+            <table>
+              <thead><tr><th>বিষয়</th><th>নম্বর</th></tr></thead>
+              <tbody>${subjectRows}</tbody>
+            </table>
+          `;
+          resetBtn.style.display = "block";
+        } else {
+          resultDiv.innerHTML = "রেজাল্ট খুঁজে পাওয়া যায়নি।";
+          resetBtn.style.display = "block";
+        }
+      })
+      .catch(() => {
+        resultDiv.innerHTML = "রেজাল্ট লোড করতে সমস্যা হচ্ছে।";
+        resetBtn.style.display = "block";
+      });
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function() {
+    document.getElementById("resultForm").reset();
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("resetBtn").style.display = "none";
+    generateCheckQuestion();
+  });
+  
+  
+  
+  
+  
+      function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      menu.classList.toggle('show');
+      hamburger.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    }
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggleBtn');
+      const isDark = document.body.classList.contains('dark');
+      btn.textContent = isDark ? '🌙 Dark Mode: ON' : '🌙 Dark Mode: OFF';
+    }
+</script>
+</body>
+</html>
